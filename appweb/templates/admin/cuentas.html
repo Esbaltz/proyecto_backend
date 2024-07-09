@@ -97,9 +97,10 @@
                                         <form method="post" action="{% url 'cuentas' %}">
                                             {% csrf_token %}
                                             {{ form|crispy }}
-                                            <a href="{% url 'modificar_cuenta' usuario.id %}" class="w3-button w3-black">Modificar</a>
+                                            <a href="{% url 'modificar_cuenta' usuario.id %}"
+                                            class="w3-button w3-black">modificar</a>
                                             <input type="hidden" name="usuario_id" value="{{ usuario.id }}">
-                                            <button type="button" class="w3-button w3-red w3-hover-pink" onclick="confEliminar('{% url 'cuentas' usuario.id %}', 'usuarios')">Eliminar</button>
+                                            <button type="submit"  class="w3-button w3-red w3-hover-pink"  onclick="return confirm('¿Estás seguro de eliminar este usuario?')">Eliminar</button>
                                         </form>
 
                                     </td>
