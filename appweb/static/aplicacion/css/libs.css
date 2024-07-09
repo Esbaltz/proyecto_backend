@@ -1,0 +1,201 @@
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Raleway", sans-serif;
+}
+
+body,
+html {
+  height: 100%;
+  line-height: 1.8;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Full height image header */
+.bgimg-1 {
+  background-position: center;
+  background-size: cover;
+  background-image: url("../img/inicio-img.jpg");
+  min-height: 100%;
+}
+
+.w3-bar .w3-button {
+  padding: 16px;
+}
+
+.img-move {
+  display: block;
+}
+
+.img-move img {
+  transition: 0.3s;
+}
+
+.img-move:hover img {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.efect {
+  transition: 0.3s;
+}
+
+.efect:hover {
+  transform: scale(1.05);
+  letter-spacing: 5px;
+}
+
+.l-efect a {
+  transition: 0.5s;
+}
+
+.foot a {
+  transition: 0.3s;
+}
+
+.cat {
+  transition: 0.3s;
+}
+
+.book img {
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.fade-line {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, black, transparent);
+}
+
+/* Estilo para la fila de libros */
+.book-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Estilo para los libros */
+.book {
+  width: 150px;
+  text-align: center;
+
+  padding-right: 6px;
+  padding-left: 6px;
+  padding-bottom: 5px;
+  opacity: 0.6;
+  transition: 0.3s;
+  /* Espacio entre el libro y la línea */
+}
+
+/* Estilo para la línea debajo del libro al hacer hover */
+.book:hover {
+  position: relative;
+  opacity: 1;
+  /* Ajusta la posición de la línea relativa al libro */
+}
+
+/* Estilo para la línea debajo del libro */
+.book::after {
+  content: "";
+  /* Añade contenido al seudoelemento */
+  position: absolute;
+  /* Coloca el seudoelemento en una posición absoluta */
+  left: 0;
+  /* Ajusta la posición inicial de la línea */
+  bottom: 0;
+  /* Ajusta la posición vertical de la línea */
+  width: 100%;
+  /* Ancho de la línea */
+  height: 2px;
+  /* Grosor de la línea */
+  background-color: transparent;
+  /* Color de la línea (inicialmente transparente) */
+  transition: background-color 0.3s ease;
+  /* Transición suave del color de fondo */
+}
+
+/* Estilo para la línea debajo del libro al hacer hover */
+.book:hover::after {
+  background-color: black;
+  /* Color de la línea al hacer hover */
+}
+
+.sc {
+  opacity: 1;
+  font-weight: bold;
+}
+.category-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.toggle-btn {
+  font-size: 20px;
+  width: 120px;
+  margin: 0 10px;
+  /* Ajusta el espacio entre el texto y las flechas según sea necesario */
+  font-weight: bold;
+}
+
+.toggle-arrows {
+  display: flex;
+  align-items: center;
+}
+
+.toggle-arrows > div {
+  cursor: pointer;
+}
+
+.tr {
+  transition: 0.2s;
+}
+
+.per-border {
+  border-radius: 10px;
+  border: 10px solid rgb(255, 0, 0);
+}
+
+#second-navbar {
+  background-color: #dc3545 !important;
+}
+
+#second-navbar .nav-link {
+  color: white !important;
+}
+
+#second-navbar-content {
+  background-color: #7f8c8d;
+  color: black;
+}
+
+.btn {
+  background-color: #dddddd;
+  transition: 0.3s;
+  color: #000;
+}
+
+.btn:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.f-c {
+  background-color: #e5e5e5;
+}
+
+.error-message {
+  color: #ffae42;
+  font-size: 12px;
+}

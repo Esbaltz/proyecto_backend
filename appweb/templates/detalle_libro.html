@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %} Libro {% endblock titulo %}
+
+{% block contenido %}
+<div class="w3-content w3-padding-16" style="max-width:1000px">
+    <!-- About Section -->
+    <div class="w3-row w3-padding-64" id="about">
+      <div class="w3-col m6 w3-padding-large">
+        <img src="{{ libro.foto.url }}" class="w3-round w3-image img-move" alt="Table Setting" width="340">
+      </div>
+      <div class="w3-col m6 w3-padding-large">
+        <h1 class="w3-center">{{ libro.nombre }}</h1>
+        <h5 class="w3-center">{{ libro.nombre_autor }}</h5>
+        <p class="w3-large" id="book-description">
+          Etiam commodo augue pulvinar nulla pharetra, a congue ante congue. Aliquam viverra maximus suscipit. Aliquam efficitur 
+          ut nulla ut posuere. Phasellus bibendum, augue sed blandit aliquet, ante diam consequat diam, et sagittis erat enim eu velit. 
+          Aenean blandit velit sed scelerisque porta. Vestibulum purus sem, finibus vel rhoncus nec, accumsan auctor dui. Aenean scelerisque 
+          semper metus, vel interdum ipsum sollicitudin in. Phasellus vulputate sapien vitae arcu porttitor elementum. Suspendisse neque 
+          metus, placerat sed velit ac, aliquam fermentum lacus.
+        </p>
+        {% if user.is_authenticated %}
+        <form class="w3-center" id="agregar-carrito-form" action="{% url 'agregar_carrito' libro.isbn %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="w3-button w3-black">Agregar al carrito</button>
+        </form>
+        {% else %}
+        <p><strong>Debe iniciar sesión para comprar</strong></p>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+    <hr>
+  </div>
+
+  <div class="w3-padding-16">
+    <h1 class="w3-center w3-large w3-black" style="margin-right: 10%; margin-left: 10%;">RECOMENDADOS</h1>
+  </div>
+  <div class="w3-content" style="max-width:1200px">
+    <!-- First Photo Grid-->
+    <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+        {% for libro in libros_r %}
+        <div class="w3-quarter">
+            <a href="{% url 'detalle_libro' libro.isbn %}" class="img-move">
+                <img src="{{ libro.foto.url }}" alt="{{ libro.nombre }}" style="width:100%">
+            </a>
+            <h3>{{ libro.nombre }}</h3>
+            <p>{{ libro.nombre_autor }}</p>
+            <p>Precio: ${{ libro.precio }}</p>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+{% endblock contenido %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('agregar-carrito-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevenir el envío del formulario por defecto
+
+        // Mostrar alerta con SweetAlert2
+        Swal.fire({
+            title: '¿Agregar este libro al carrito?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Agregar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si el usuario confirma, proceder con el envío del formulario
+                this.submit(); // Envía el formulario
+            }
+        });
+    });
+});
+  </script>
+{% endblock scripts %}

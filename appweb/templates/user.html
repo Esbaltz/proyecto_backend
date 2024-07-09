@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load custom_filters %}
+
+{% block contenido %}
+    <div class="container mt-5" style="padding-top: 40px">
+        <h2 class="text-center text-dark mb-5">Tus Compras realizadas con éxito</h2>
+        <p class="text-center">Aquí podrás ver tus compras.</p>
+
+        <div class="container admin">
+            {% if user.is_authenticated %}
+                {% if perms.appweb.delete_libro %}
+                    <a href="{% url 'agregar' %}"><strong>Ingreso Admin</strong></a>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        {% if compras %}
+        {% for compra in compras %}
+            <table class="table table-striped mt-4">
+                <thead>
+                    <tr>
+                        <th>Foto</th>
+                        <th>Nombre del Libro</th>
+                        <th>Autor</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items_por_compra|get_item:compra %}
+                        <tr>
+                            <td>    
+                                <a href="{% url 'detalle_libro' item.libro.isbn %}">
+                                <img src="{{ item.libro.foto.url }}" alt="{{ item.libro.nombre }}" class="img-fluid" style="max-width: 100px;">
+                                </a>
+                            </td>
+                            <td>{{ item.libro.nombre }}</td>
+                            <td>{{ item.libro.nombre_autor }}</td>
+                            <td>${{ item.libro.precio }}</td>
+                            <td>{{ item.cantidad }}</td>
+                            <td>${{ item.cantidad|multiply:item.libro.precio }}</td>
+                            <td><strong>{{ item.estado }}</strong></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endfor %}
+        {% else %}
+            <p class="text-center">No se encontraron artículos comprados.</p>
+        {% endif %}
+    </div>
+{% endblock contenido %}

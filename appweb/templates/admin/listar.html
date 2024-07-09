@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Productos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link href="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/css/iziToast.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'aplicacion/css/libs.css' %}">
+</head>
+
+<body class="w3-light-grey">
+
+    <!-- Top container -->
+    <div class="w3-bar w3-black w3-large w3-top" style="z-index:4;">
+        <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey"
+            onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+        <a href="{% url 'index' %}" class="w3-bar-item w3-right">ENTRE VERBOS</a>
+
+    </div>
+
+    <!-- Sidebar/menu -->
+    <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px; margin-top:43px; top: 0;"
+        id="mySidebar"><br>
+        <div class="w3-container w3-row">
+            <div class="w3-col m2 text-center" style="margin-right: 43px;">
+                <img class="w3-circle" src="{% static 'aplicacion/img/inspirado.jpeg' %}"
+                    style="width:76px;height:76px">
+            </div>
+            <div class="w3-col s8 w3-bar">
+                <span>Welcome, <strong>ADMIN</strong></span><br>
+            </div>
+        </div>
+        <hr>
+        <div class="w3-container w3-center">
+            <h5><strong>Panel de Control</strong></h5>
+        </div>
+
+        <div class="w3-bar-block">
+            <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
+                onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+            <a href="{% url 'agregar' %}" class="w3-bar-item w3-button w3-padding tr"><i
+                    class="fa fa-solid fa-book fa-fw"></i>  Agregar
+                Producto</a>
+
+            <a href="{% url 'listar' %}" class="w3-bar-item w3-button w3-padding w3-blue tr"><i
+                    class="fa fas fa-search fa-fw"></i>  Listado de
+                Productos</a>
+        </div>
+        <div class="w3-container w3-center mt-3">
+            <h5><strong>Gestión de usuarios</strong></h5>
+        </div>
+        <div class="w3-bar-block">
+            <a href="{% url 'pedidos' %}" class="w3-bar-item w3-button w3-padding tr"><i
+                    class="fa fas fa-people-carry fa-fw"></i>  Ver pedidos</a>
+        </div>
+    </nav>
+
+
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
+        title="close side menu" id="myOverlay"></div>
+
+    <!-- !PAGE CONTENT! -->
+    <div class="row mt-3">
+        <div class="col-sm"></div>
+        <div class="col-sm" style="padding-top: 70px;">
+            <div class="container p-5 rounded" id="second-navbar-content">
+                <form class="buscar_pro_form" style="color: #ffffff;">
+                    <div class="w3-center">
+                        <h2>Listado de Libros</h2>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <!-- Aquí puedes mostrar la lista de libros -->
+                        <table class="table table-striped table-hover table-responsive-sm">
+                            <thead>
+                                <tr>
+                                    <th>Foto</th>
+                                    <th>Nombre</th>
+                                    <th>precio</th>
+                                    <th>opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for p in libros %}
+                                <tr>
+                                    <td><img src="{{p.foto.url}}" alt="foto" height="100"></td>
+                                    <td>{{p.nombre}}</td>
+                                    <td>{{p.precio}}</td>
+
+                                    <td>
+                                        <a href="{% url 'modificar' p.isbn %}"
+                                            class="btn btn-primary">modificar</a>
+                                            <a href="javascript:void(0)" class="btn btn-danger" onclick="eliminarFila('/eliminar/{{p.isbn}}', 'Libros')">eliminar</a>
+
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm"></div>
+    </div>
+
+    <!-- End page content -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
+    <script src="{% static 'aplicacion/js/menus.js' %}"></script>
+    <script src="{% static 'aplicacion/js/messages.js' %}"></script>
+
+</body>
+
+</html>

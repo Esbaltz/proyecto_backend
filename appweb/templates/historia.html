@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %}Historia{% endblock titulo %}
+
+{% block contenido %}
+<div style="padding-top: 125px;">
+    <div class="w3-center">
+        <div class="category-header">
+            <div class="toggle-arrows">
+                <div onclick="toggleCategory2()"><i class="fa fa-chevron-left"></i></div>
+            </div>
+            <div class="toggle-btn">No Ficción</div>
+            <div class="toggle-arrows">
+                <div onclick="toggleCategory2()"><i class="fa fa-chevron-right"></i></div>
+            </div>
+        </div>
+
+        <div class="category-list" id="fiction-categories" style="display: none;">
+            <a href="{% url 'sci_fi' %}" class="book">Sci-fi</a>
+            <a href="{% url 'misterio' %}" class="book"> Misterio</a>
+            <a href="{% url 'terror' %}" class="book">Terror</a>
+            <a href="{% url 'fantasia' %}" class="book">Fantasia</a>
+        </div>
+        <div class="category-list" id="nonfiction-categories">
+            <a href="{% url 'historia' %}" class="book sc">Historia</a>
+            <a href="{% url 'biografia' %}" class="book">Biografía</a>
+        </div>
+    </div>
+    <hr class="fade-line">
+</div>
+
+<div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:0px">
+
+    <!-- About Section -->
+    <div class="w3-container" style="padding-top: 50px;" id="about">
+        <h1 class="w3-center w3-large w3-black" style="margin-right:10%; margin-left: 10%;">Historia</h1>
+        <p class="w3-center w3-large">Abre las puertas al pasado</p>
+    </div>
+
+    <!-- First Photo Grid-->
+    <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+        {% for p in libros_req %}
+                <div class="w3-quarter">
+                    <a href="{% url 'detalle_libro' p.isbn %}" class="img-move">
+                        {% if p.foto %}
+                        <img src="{{ p.foto.url }}" alt="Autonumus" style="width:100%">
+                        {% endif %}
+                    </a>
+                <h3>{{ p.nombre }}</h3>
+                <p>Just some random text, lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+                </div>
+        {% endfor %}
+        </div>
+
+    <!-- About Section -->
+    <div class="w3-container" style="padding-top: 50px;" id="about">
+        <h1 class="w3-center w3-large w3-black" style="margin-right: 10%; margin-left: 10%;">RECOMENDACIONES:
+            <strong>Historia</strong></h1>
+        <p class="w3-center w3-large">Libros con criticas excelentes del género</p>
+    </div>
+    <!-- Second Photo Grid-->
+    <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+        {% for libro in libros_rec %}
+        <div class="w3-quarter">
+            <a href="{% url 'detalle_libro' libro.isbn %}" class="img-move">
+                <img src="{{ libro.foto.url }}" alt="{{ libro.nombre }}" style="width:100%">
+            </a>
+            <h3>{{ libro.nombre }}</h3>
+            <p>{{ libro.nombre_autor }}</p>
+            <p>Precio: ${{ libro.precio }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock contenido %}

@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}
+
+{% block contenido %}
+    <div class="container mt-5 w3-padding-16">
+        <div class="row">
+            <div class="col-lg-8">
+                <h1 class="text-center text-dark mb-5">Carrito de Compras</h1>
+                
+                {% if libros_en_carrito %}
+                    <div class="card mb-4">
+                        {% for item in libros_en_carrito %}
+                            <div class="card-body border-bottom">
+                                <div class="row align-items-center">
+                                    <div class="col-md-3">
+                                        <img src="{{ item.libro.foto.url }}" alt="{{ item.libro.nombre }}" class="img-fluid" style="max-width: 100px;">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h3>{{ item.libro.nombre }}</h3>
+                                        <p class="text-muted">Por: {{ item.libro.nombre_autor }}</p>
+                                        <p>Precio: ${{ item.libro.precio }}</p>
+                                        <p>Cantidad:<strong> {{ item.cantidad }}</strong></p>
+                                        <p>Subtotal: ${{ item.cantidad|multiply:item.libro.precio }}</p>
+                                        <div class="btn-group mt-3" role="group">
+                                            <form action="{% url 'disminuir_cantidad' item.libro.isbn %}" method="POST">
+                                                {% csrf_token %}
+                                                    <button type="submit" class="w3-button w3-border" {% if item.cantidad == 1 %}disabled{% endif %}><strong>-</strong></button>
+                                            </form>
+                                            <form action="{% url 'aumentar_cantidad' item.libro.isbn %}" method="POST" class="mr-2">
+                                                {% csrf_token %}
+                                                <button type="submit" class="w3-button w3-border"><strong>+</strong></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 text-right">
+                                        <form id='elim' action="{% url 'eliminar_carrito' item.libro.isbn %}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" class="w3-button w3-black">Eliminar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-danger text-center mt-4">El carrito está vacío.</p>
+                {% endif %}
+            </div>
+            <div class="col-lg-4">
+                <div class="" style="padding-top: 100px;">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title text-center mb-4">Resumen</h5>
+                            {% if libros_en_carrito %}
+                                <p class="h6">Total: ${{ total }}</p>
+                                <form id="vaciar" action="{% url 'vaciar_carrito' %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="w3-button w3-black">Vaciar Carrito</button>
+                                </form>
+                                <hr>
+                                <form id="pagar" action="{% url 'pagar' %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="w3-button w3-black">Pagar</button>
+                                </form>
+                            {% else %}
+                                <p class="text-muted text-center">El carrito está vacío.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock contenido %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var formVaciar = document.getElementById('vaciar');
+        if (formVaciar) {
+            formVaciar.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevenir el envío del formulario por defecto
+
+                // Mostrar alerta con SweetAlert2
+                Swal.fire({
+                    title: '¿Seguro que quiere vaciar el carrito?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Vaciar carrito',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario confirma, proceder con el envío del formulario
+                        this.submit(); // Envía el formulario
+                    }
+                });
+            });
+        }
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var formPagar = document.getElementById('pagar');
+        if (formPagar) {
+            formPagar.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevenir el envío del formulario por defecto
+    
+            // Mostrar alerta con SweetAlert2
+                Swal.fire({
+                    title: '¿Seguro que quiere realizar el pago?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Pagar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario confirma, proceder con el envío del formulario
+                        this.submit(); // Envía el formulario
+                    }
+                });
+            });
+        }
+    });
+    </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var formElim = document.getElementById('elim');
+        if (formElim) {
+            formElim.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevenir el envío del formulario por defecto
+      
+                // Mostrar alerta con SweetAlert2
+                Swal.fire({
+                    title: '¿Seguro que quiere eliminar el libro?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si el usuario confirma, proceder con el envío del formulario
+                        this.submit(); // Envía el formulario
+                    }
+                });
+            });
+        }
+    });
+</script>
+{% endblock scripts %}

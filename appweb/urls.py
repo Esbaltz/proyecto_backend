@@ -1,0 +1,33 @@
+from django.urls import path
+from .views import index, tienda, user, agregar, detalle_libro, carrito, agregar_carrito, eliminar_carrito, vaciar_carrito, listar, modificar, eliminar, sesion, salir, registro, sci_fi, terror, misterio, biografia, historia, fantasia, aumentar_cantidad, disminuir_cantidad, pagar, pedidos, permiso, cuentas, modificar_cuenta
+
+urlpatterns = [
+    path('', index, name='index'),
+    path('tienda/', tienda, name='tienda'),
+    path('user/', user, name='user'),
+    path('agregar/', agregar, name='agregar'),
+    path('listar/', listar, name='listar'),
+    path('modificar/<str:isbn>/', modificar, name='modificar'),
+    path('eliminar/<isbn>/', eliminar, name='eliminar'),
+    path('detalle_libro/<int:isbn>/', detalle_libro, name='detalle_libro'),
+    path('sci_fi/', sci_fi, name='sci_fi'),
+    path('terror/', terror, name='terror'),
+    path('historia/', historia, name='historia'),
+    path('biografia/', biografia, name='biografia'),
+    path('fantasia/', fantasia, name='fantasia'),
+    path('misterio/', misterio, name='misterio'),
+    path('carrito/', carrito, name='carrito'),
+    path('agregar_al_carrito/<str:isbn>/', agregar_carrito, name='agregar_carrito'),
+    path('eliminar_del_carrito/<str:isbn>/', eliminar_carrito, name='eliminar_carrito'),
+    path('vaciar_carrito/', vaciar_carrito, name='vaciar_carrito'),
+    path('aumentar_cantidad/<str:isbn>/', aumentar_cantidad, name='aumentar_cantidad'),
+    path('disminuir_cantidad/<str:isbn>/', disminuir_cantidad, name='disminuir_cantidad'),
+    path('sesion/', sesion, name='sesion'),
+    path('salir/', salir,name='salir'),
+    path('registro/', registro, name='registro'),
+    path('pagar/', pagar, name='pagar'),
+    path('pedidos/', pedidos, name='pedidos'),
+    path('permiso/', permiso, name='permiso'),
+    path('cuentas/', cuentas, name='cuentas'),
+    path('modificar-cuenta/<int:usuario_id>/', modificar_cuenta, name='modificar_cuenta'),
+]

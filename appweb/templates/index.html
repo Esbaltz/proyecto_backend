@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %} ENTRE VERBOS {% endblock titulo %}
+
+{% block contenido %}
+<header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
+    <div class="w3-display-left w3-text-white" style="padding:48px">
+        <span class="w3-jumbo w3-hide-small">Comienza tu viaje con Entre Verbos</span><br><br>
+        <span class="w3-xxlarge w3-hide-large w3-hide-medium">Entre Verbos</span><br>
+        <span class="w3-large">En Entre Verbos puedes encontrar todo los libros que quieras.</span>
+        <p><a href="{% url 'tienda' %}"
+                class="w3-animate-left w3-button w3-white w3-padding-large w3-large w3-margin-top w3-hover-opacity-off cat">Revisa
+                nuestro catálogo</a></p>
+    </div>
+</header>
+<!-- !PAGE CONTENT! -->
+<div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:0px">
+
+    <!-- About Section -->
+    <div class="w3-container" style="padding-top: 50px;" id="about">
+        <h1 class="w3-center w3-large w3-black" style="margin-right:10%; margin-left: 10%;">BEST SELLER</h1>
+        <p class="w3-center w3-large">En esta sección encontrarás los libros más vendidos</p>
+    </div>
+
+    <!-- First Photo Grid-->
+    <div class="w3-content" style="max-width:1200px">
+        <!-- First Photo Grid-->
+        <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+            {% for libro in libros_aleatorios %}
+            <div class="w3-quarter">
+                <a href="{% url 'detalle_libro' libro.isbn %}" class="img-move">
+                    <img src="{{ libro.foto.url }}" alt="{{ libro.nombre }}" style="width:100%">
+                </a>
+                <h3>{{ libro.nombre }}</h3>
+                <p>{{ libro.nombre_autor }}</p>
+                <p>Precio: ${{ libro.precio }}</p>
+            </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="w3-container" style="padding-top: 50px;" id="about">
+        <h1 class="w3-center w3-large w3-black" style="margin-right: 10%; margin-left: 10%;">RECOMENDADOS</h1>
+        <p class="w3-center w3-large">En esta sección encontrarás recomendaciones de <strong>entre verbos</strong></p>
+    </div>
+    <!-- Second Photo Grid-->
+    <div class="w3-content" style="max-width:1200px">
+        <!-- First Photo Grid-->
+        <div class="w3-row-padding w3-padding-16 w3-center" id="food">
+            {% for libro in libros_req %}
+            <div class="w3-quarter">
+                <a href="{% url 'detalle_libro' libro.isbn %}" class="img-move">
+                    <img src="{{ libro.foto.url }}" alt="{{ libro.nombre }}" style="width:100%">
+                </a>
+                <h3>{{ libro.nombre }}</h3>
+                <p>{{ libro.nombre_autor }}</p>
+                <p>Precio: ${{ libro.precio }}</p>
+            </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock contenido %}
