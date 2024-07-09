@@ -421,15 +421,23 @@ def pedidos(request):
     
 @permission_required('appweb.delete_libro')
 def cuentas(request):
+    exito = False
     usuarios = User.objects.exclude(username='admin')
 
     if request.method == 'POST':
         usuario_id = request.POST.get('usuario_id')
         usuario = User.objects.get(id=usuario_id)
         usuario.delete()
-        return redirect('cuentas')  # Redirige de vuelta a la misma página después de eliminar
+        exito = True
+        return redirect('cuentas')
+
+    diccionario = {
+        'usuarios': usuarios,
+        'exito': exito  
+    }
     
-    return render(request, 'admin/cuentas.html', {'usuarios': usuarios})
+    return render(request, 'admin/cuentas.html', diccionario)
+
 @permission_required('appweb.delete_libro')
 def modificar_cuenta(request, usuario_id):
     usuario = User.objects.get(id=usuario_id)
@@ -439,7 +447,7 @@ def modificar_cuenta(request, usuario_id):
         if form.is_valid():
             form.save()
             messages.success(request, f'Se ha modificado la cuenta de {usuario.username}.')
-            return redirect('cuentas')  # Redirige a la lista de cuentas después de modificar
+            return redirect('cuentas')  
     else:
         form = CustomUserChangeForm(instance=usuario)
     
