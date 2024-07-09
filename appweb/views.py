@@ -419,7 +419,7 @@ def pedidos(request):
         'form': form,
     })
     
-
+@permission_required('appweb.delete_libro')
 def cuentas(request):
     usuarios = User.objects.exclude(username='admin')
 
@@ -430,7 +430,7 @@ def cuentas(request):
         return redirect('cuentas')  # Redirige de vuelta a la misma página después de eliminar
     
     return render(request, 'admin/cuentas.html', {'usuarios': usuarios})
-
+@permission_required('appweb.delete_libro')
 def modificar_cuenta(request, usuario_id):
     usuario = User.objects.get(id=usuario_id)
     
