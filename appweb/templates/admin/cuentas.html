@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html>
 
@@ -52,6 +53,9 @@
             <a href="{% url 'listar' %}" class="w3-bar-item w3-button w3-padding w3-blue tr"><i
                     class="fa fas fa-search fa-fw"></i>  Listado de
                 Productos</a>
+                
+                <a href="{% url 'cuentas' %}" class="w3-bar-item w3-button w3-padding tr"><i
+                    class="fas fa-user-edit"></i>  Listado de usuarios</a>
         </div>
         <div class="w3-container w3-center mt-3">
             <h5><strong>Gestión de usuarios</strong></h5>
@@ -68,33 +72,56 @@
         title="close side menu" id="myOverlay"></div>
 
     <!-- !PAGE CONTENT! -->
+
     <div class="row mt-3">
         <div class="col-sm"></div>
         <div class="col-sm" style="padding-top: 70px;">
-            <h1>Listado de Usuarios</h1>
-    <ul>
-        {% for usuario in usuarios %}
-            <li>
-                {{ usuario.username }} 
-                <a href="{% url 'modificar_cuenta' usuario.id %}">Modificar</a> 
-                <form action="" method="post" style="display: inline;">
-                    {% csrf_token %}
-                    <input type="hidden" name="usuario_id" value="{{ usuario.id }}">
-                    <button type="submit" onclick="return confirm('¿Estás seguro de eliminar este usuario?')">Eliminar</button>
+            <div class="container p-5 rounded" id="second-navbar-content">
+                <form class="" style="color: #ffffff;">
+                    <div class="w3-center">
+                        <h2>Listado de Usuarios</h2>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <!-- Aquí puedes mostrar la lista de libros -->
+                        <table class="table table-striped table-hover table-responsive-sm">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for usuario in usuarios %}
+                                <tr>
+                                    <td>{{ usuario.username }} </td>
+                                    <td>
+                                    <form method="post" action="{% url 'cuentas' %}">
+                                        {% csrf_token %}
+                                        {{ form|crispy }}
+                                        <a href="{% url 'modificar_cuenta' usuario.id %}"
+                                        class="w3-button w3-black">modificar</a>
+                                        <input type="hidden" name="usuario_id" value="{{ usuario.id }}">
+                                        <button type="submit"  class="w3-button w3-red w3-hover-pink"  onclick="return confirm('¿Estás seguro de eliminar este usuario?')">Eliminar</button>
+                                    </form>
+
+                                    </td>
+                                    
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </form>
-            </li>
-        {% endfor %}
-    </ul>
+            </div>
         </div>
         <div class="col-sm"></div>
     </div>
-
     <!-- End page content -->
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/izitoast@1.4.0/dist/js/iziToast.min.js"></script>
     <script src="{% static 'aplicacion/js/menus.js' %}"></script>
     <script src="{% static 'aplicacion/js/messages.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 
